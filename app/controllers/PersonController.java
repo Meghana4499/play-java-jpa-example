@@ -6,7 +6,7 @@ import play.data.FormFactory;
 import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Controller;
 import play.mvc.Result;
-
+import com.fasterxml.jackson.databind.JsonNode;
 import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
 import java.util.stream.Collectors;
@@ -35,8 +35,10 @@ public class PersonController extends Controller {
         return ok(views.html.index.render());
     }
 
+
     public CompletionStage<Result> addPerson() {
         Person person = formFactory.form(Person.class).bindFromRequest().get();
+
         return personRepository.add(person).thenApplyAsync(p -> {
             return redirect(routes.PersonController.index());
         }, ec.current());
@@ -47,5 +49,18 @@ public class PersonController extends Controller {
             return ok(toJson(personStream.collect(Collectors.toList())));
         }, ec.current());
     }
+    public CompletionStage<Result> addPersonJason() {
+        JsonNode js = request().body().asJson();
+        String fname = null;
+        if (js.has("name")) {
+            fname= js.get("name").asText();
+        }
+        Person person = new Person();
+        person.setName(fname);
+        return personRepository.add(person).thenApplyAsync(p -> {
+            return ok("Added Successfuly");
+        }, ec.current());
+    }
+
 
 }
