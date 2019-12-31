@@ -10,8 +10,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
 import java.util.stream.Collectors;
-
-import static play.libs.Json.toJson;
+import static  play.libs.Json.toJson;
+import play.libs.Json;
 
 /**
  * The controller keeps all database operations behind the repository, and uses
@@ -51,16 +51,21 @@ public class PersonController extends Controller {
     }
     public CompletionStage<Result> addPersonJason() {
         JsonNode js = request().body().asJson();
-        String fname = null;
+       /* String fname = null;
         if (js.has("name")) {
-            fname= js.get("name").asText();
+            fname = js.get("name").asText();
         }
         Person person = new Person();
-        person.setName(fname);
+        person.setName(fname);*/
+        Person person = Json.fromJson(js,Person.class);
         return personRepository.add(person).thenApplyAsync(p -> {
-            return ok("Added Successfuly");
+            return ok("Added succesfully "+person.name);
         }, ec.current());
     }
-
+   public CompletionStage<Result> deletePerson(String name) {
+            return personRepository.del(name).thenApplyAsync(p -> {
+                return ok("Delete success");
+            }, ec.current());
+        }
 
 }

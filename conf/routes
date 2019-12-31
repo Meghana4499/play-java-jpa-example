@@ -7,5 +7,6 @@ GET     /                           controllers.PersonController.index()
 POST    /person                     controllers.PersonController.addPerson()
 GET     /persons                    controllers.PersonController.getPersons()
 POST    /adding                   controllers.PersonController.addPersonJason()
+DELETE  /per/:name                      controllers.PersonController.deletePerson(name : String)
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
