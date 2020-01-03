@@ -28,8 +28,9 @@ dependencies {
     play "com.typesafe.play:play-ahc-ws_$scalaVersion:$playVersion"
     play "com.typesafe.play:filters-helpers_$scalaVersion:$playVersion"
     play "com.typesafe.play:play-java-jpa_$scalaVersion:$playVersion"
+    play "mysql:mysql-connector-java:8.0.18"
 
-    play "org.hibernate:hibernate-core:5.2.5.Final"
+    play "org.hibernate:hibernate-core:5.3.1.Final"
     play "com.h2database:h2:1.4.197"
 
     playTest "org.awaitility:awaitility:2.0.0"

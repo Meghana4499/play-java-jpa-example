@@ -61,7 +61,8 @@ public class PersonController extends Controller {
             return ok("Added succesfully "+person.name);
         }, ec.current());
     }
-   public CompletionStage<Result> deletePerson(String name) {
+
+     public CompletionStage<Result> deletePerson(String name) {
             return personRepository.del(name).thenApplyAsync(p -> {
                 return ok("Delete success");
             }, ec.current());
